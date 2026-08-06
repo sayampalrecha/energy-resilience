@@ -1,0 +1,21 @@
+name: Keep-Alive Commit
+
+on:
+  schedule:
+    # Runs every 11 hours
+    - cron: '0 */11 * * *'
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Make Empty Commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git commit --allow-empty -m "Chore: Keep-alive commit to prevent Streamlit sleep"
+          git push
